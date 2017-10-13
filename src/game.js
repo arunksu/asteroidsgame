@@ -82,7 +82,7 @@ export default class Game
   // Update.
   update()
   {
-    this.ship.update(this.move, this.moveRight, this.moveLeft);
+    this.ship.update(this.move, this.rotateRight, this.rotateLeft);
   }
 
   // Render.

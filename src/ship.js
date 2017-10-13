@@ -10,6 +10,7 @@ export default class Ship
     this.moving = false;
     this.moveLeft = false;
     this.moveRight = false;
+    this.speed = 0;
   }
 
   render(ctx)
@@ -33,10 +34,9 @@ export default class Ship
   {
     if (move) { this.y -= 2; }
     if (rotateRight) { this.angle += 0.05; }
-    if (rotateLeft) { this.angle -= 0.5; }
+    if (rotateLeft) { this.angle -= 0.05; }
 
-    console.log('x:' + this.x);
-    console.log('y:' + -this.y);
+    console.log(this.angle);
 
     // Screen wrapping.
     if(this.x < 0) { this.x = this.screenWidth; }

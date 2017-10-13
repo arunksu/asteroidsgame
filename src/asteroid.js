@@ -1,7 +1,8 @@
 export default class Asteroid
 {
-  constructor(screenWidth, screenHeight)
+  constructor(screenWidth, screenHeight, size)
   {
+    this.size = size;
     this.x = Math.random() * screenWidth;
     this.y = Math.random() * screenHeight;
     this.angle = 0;

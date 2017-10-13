@@ -26,7 +26,7 @@ export default class Game
     var i = 0;
     for (i = 0; i < 10; i++)
     {
-      var asteroid = new Asteroid(this.canvas.width, this.canvas.height);
+      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 'large');
       this.asteroids.push(asteroid);
     }
 
@@ -36,13 +36,14 @@ export default class Game
     window.onkeydown = this.handleKeyDown;
     window.onkeyup = this.handleKeyUp;
 
-    // Other bindings.
+    // Other bindings and game loop.
     this.update = this.update.bind(this);
     this.render = this.render.bind(this);
     this.loop = this.loop.bind(this);
     this.interval = setInterval(this.loop, 1);
   }
 
+  // Key down events.
   handleKeyDown(event)
   {
     event.preventDefault();
@@ -60,6 +61,7 @@ export default class Game
     }
   }
 
+  // Key up events.
   handleKeyUp(event)
   {
     event.preventDefault();
@@ -77,13 +79,16 @@ export default class Game
     }
   }
 
+  // Update.
   update()
   {
     this.ship.update(this.move, this.moveRight, this.moveLeft);
   }
 
+  // Render.
   render()
   {
+    // Clear.
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // Ship.
@@ -98,6 +103,7 @@ export default class Game
     }
   }
 
+  // Game loop.
   loop()
   {
     this.update();

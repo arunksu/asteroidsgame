@@ -22,5 +22,9 @@ document.body.appendChild(canvas);
 var ship = new Ship(canvas.width, canvas.height);
 ship.render(ctx);
 
-var asteroid = new Asteroid(canvas.width, canvas.height);
-asteroid.render(ctx);
+var i = 0;
+for (i = 0; i < 10; i++)
+{
+  var asteroid = new Asteroid(canvas.width, canvas.height);
+  asteroid.render(ctx);
+}

@@ -5,6 +5,9 @@ export default class Ship
     this.x = screenWidth / 2;
     this.y = screenHeight / 2;
     this.angle = 0;
+    this.moving = false;
+    this.moveLeft = false;
+    this.moveRight = false;
   }
 
   render(ctx)
@@ -22,5 +25,12 @@ export default class Ship
     ctx.closePath();
     ctx.fill();
     ctx.restore();
+  }
+
+  update(move, rotateRight, rotateLeft)
+  {
+    if (move) { this.y -= 2; }
+    if (rotateRight) { this.angle += 0.05; }
+    if (rotateLeft) { this.angle -= 0.5; }
   }
 }

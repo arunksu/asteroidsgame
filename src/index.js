@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -6,3 +7,17 @@ import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
+*/
+
+import './index.css';
+import Ship from './ship';
+import Asteroid from './asteroid'
+
+var canvas = document.createElement('canvas');
+canvas.width = 600;
+canvas.height = 600;
+var ctx = canvas.getContext('2d');
+document.body.appendChild(canvas);
+
+var ship = new Ship(canvas.width, canvas.height);
+ship.render(ctx);

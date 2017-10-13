@@ -2,6 +2,8 @@ export default class Ship
 {
   constructor(screenWidth, screenHeight)
   {
+    this.screenWidth = screenWidth;
+    this.screenHeight = screenHeight;
     this.x = screenWidth / 2;
     this.y = screenHeight / 2;
     this.angle = 0;
@@ -32,5 +34,14 @@ export default class Ship
     if (move) { this.y -= 2; }
     if (rotateRight) { this.angle += 0.05; }
     if (rotateLeft) { this.angle -= 0.5; }
+
+    console.log('x:' + this.x);
+    console.log('y:' + -this.y);
+
+    // Screen wrapping.
+    if(this.x < 0) { this.x = this.screenWidth; }
+    if(this.y < 0) { this.y = this.screenHeight; }
+    if(this.x > this.screenWidth) { this.x = 0; }
+    if(this.y > this.screenHeight) { this.y = 0; }
   }
 }

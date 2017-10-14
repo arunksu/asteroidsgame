@@ -11,6 +11,7 @@ export default class Game
     this.rotateRight = false;
     this.rotateLeft = false;
     this.shoot = false;
+    this.previousTime = Math.floor(Date.now() / 1000);
 
     // Canvas and context.
     this.canvas = document.createElement('canvas');
@@ -91,11 +92,14 @@ export default class Game
   // Update.
   update()
   {
+    // Get Data.now(). Floor it by 100.
+    var currentTime = Math.floor(Date.now() / 100);
+
     // Ship.
     this.ship.update(this.move, this.rotateRight, this.rotateLeft);
 
     // Lasers.
-    if (this.shoot)
+    if (this.shoot && (this.previousTime != currentTime))
     {
       var laser = new Laser(this.canvas.width, this.canvas.height);
       this.lasers.push(laser);
@@ -107,6 +111,8 @@ export default class Game
     {
       this.lasers[j].update(this.ship.x, this.ship.y, this.ship.angle);
     }
+
+    this.previousTime = currentTime;
   }
 
   // Render.

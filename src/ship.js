@@ -21,10 +21,10 @@ export default class Ship
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
     ctx.beginPath();
-    ctx.moveTo(0, -10);
-    ctx.lineTo(-10, 10);
-    ctx.lineTo(0, 15);
-    ctx.lineTo(10, 10);
+    ctx.moveTo(15, 0);
+    ctx.lineTo(-10, -13);
+    ctx.lineTo(-15, 0);
+    ctx.lineTo(-10, 13);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
@@ -32,11 +32,16 @@ export default class Ship
 
   update(move, rotateRight, rotateLeft)
   {
-    if (move) { this.y -= 2; }
+    if (move)
+    {
+      //this.y -= 2;
+      this.x += Math.cos(this.angle);
+      this.y += Math.sin(this.angle);
+    }
     if (rotateRight) { this.angle += 0.05; }
     if (rotateLeft) { this.angle -= 0.05; }
 
-    console.log(this.angle);
+    console.log('Angle: ' + this.angle);
 
     // Screen wrapping.
     if(this.x < 0) { this.x = this.screenWidth; }

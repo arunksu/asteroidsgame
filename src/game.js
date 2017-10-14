@@ -1,5 +1,6 @@
 import Ship from './ship';
 import Asteroid from './asteroid'
+import Laser from './laser'
 
 export default class Game
 {
@@ -30,6 +31,8 @@ export default class Game
       this.asteroids.push(asteroid);
     }
 
+    this.lasers = [];
+
     // Movement key bindings.
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
@@ -47,16 +50,19 @@ export default class Game
   handleKeyDown(event)
   {
     event.preventDefault();
-    switch(event.key)
+    switch(event.keyCode)
     {
-      case 'ArrowUp':
+      case 38:
         this.move = true;
         break;
-      case 'ArrowRight':
+      case 39:
         this.rotateRight = true;
         break;
-      case 'ArrowLeft':
+      case 37:
         this.rotateLeft = true;
+        break;
+      case 32:
+        this.shoot = true;
         break;
     }
   }
@@ -65,16 +71,19 @@ export default class Game
   handleKeyUp(event)
   {
     event.preventDefault();
-    switch(event.key)
+    switch(event.keyCode)
     {
-      case 'ArrowUp':
+      case 38:
         this.move = false;
         break;
-      case 'ArrowRight':
+      case 39:
         this.rotateRight = false;
         break;
-      case 'ArrowLeft':
+      case 37:
         this.rotateLeft = false;
+        break;
+      case 32:
+        this.shoot = false;
         break;
     }
   }
@@ -82,7 +91,22 @@ export default class Game
   // Update.
   update()
   {
+    // Ship.
     this.ship.update(this.move, this.rotateRight, this.rotateLeft);
+
+    // Lasers.
+    if (this.shoot)
+    {
+      var laser = new Laser(this.canvas.width, this.canvas.height);
+      this.lasers.push(laser);
+    }
+
+    var lenLasers = this.lasers.length;
+    var j = 0;
+    for (j = 0; j < lenLasers; j++)
+    {
+      this.lasers[j].update(this.ship.x, this.ship.y, this.ship.angle);
+    }
   }
 
   // Render.
@@ -100,6 +124,13 @@ export default class Game
     for (i = 0; i < len; i++)
     {
       this.asteroids[i].render(this.ctx);
+    }
+
+    var lenLasers = this.lasers.length;
+    var j = 0;
+    for (j = 0; j < lenLasers; j++)
+    {
+      this.lasers[j].render(this.ctx);
     }
   }
 

@@ -10,7 +10,6 @@ export default class Ship
     this.moving = false;
     this.moveLeft = false;
     this.moveRight = false;
-    this.speed = 0;
   }
 
   render(ctx)

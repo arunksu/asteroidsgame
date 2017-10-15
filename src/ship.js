@@ -33,7 +33,6 @@ export default class Ship
   {
     if (move)
     {
-      //this.y -= 2;
       this.x += Math.cos(this.angle);
       this.y += Math.sin(this.angle);
     }

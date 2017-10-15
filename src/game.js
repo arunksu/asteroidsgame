@@ -98,6 +98,14 @@ export default class Game
     // Ship.
     this.ship.update(this.move, this.rotateRight, this.rotateLeft);
 
+    // Asteroids.
+    var len = this.asteroids.length;
+    var i = 0;
+    for (i = 0; i < len; i++)
+    {
+      this.asteroids[i].update();
+    }
+
     // Lasers.
     if (this.shoot && (this.previousTime != currentTime))
     {

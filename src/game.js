@@ -28,7 +28,7 @@ export default class Game
     var i = 0;
     for (i = 0; i < 10; i++)
     {
-      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 'large');
+      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 0, 0, 'large');
       this.asteroids.push(asteroid);
     }
 
@@ -140,6 +140,9 @@ export default class Game
       var currentLaser = this.lasers[j];
       var hitAsteroid = false
       if (currentLaser.hitAsteroid) { continue; }
+      var asteroidDestroyed = false;
+      var small1 = null;
+      var small2 = null;
 
       // Check if laser hit asteroid.
       for (i = 0; i < len; i++)
@@ -153,7 +156,18 @@ export default class Game
         {
           hitAsteroid = true;
           currentAsteroid.update(false, false, true);
+          if (currentAsteroid.health < 1 && currentAsteroid.size === 'large')
+          {
+            asteroidDestroyed = true;
+            small1 = new Asteroid(this.canvas.width, this.canvas.height, currentAsteroid.x, currentAsteroid.y, 'small');
+            small2 = new Asteroid(this.canvas.width, this.canvas.height, currentAsteroid.x, currentAsteroid.y, 'small');
+          }
         }
+      }
+      if (asteroidDestroyed)
+      {
+        this.asteroids.push(small1);
+        this.asteroids.push(small2);
       }
       this.lasers[j].update(this.ship.x, this.ship.y, this.ship.angle, hitAsteroid);
     }

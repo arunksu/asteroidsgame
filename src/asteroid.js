@@ -1,13 +1,21 @@
 export default class Asteroid
 {
-  constructor(screenWidth, screenHeight, size)
+  constructor(screenWidth, screenHeight, x, y, size)
   {
     this.size = size;
     this.health = 10;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
-    this.x = Math.random() * screenWidth;
-    this.y = Math.random() * screenHeight;
+    if (size === 'small')
+    {
+      this.x = x;
+      this.y = y;
+    }
+    else
+    {
+      this.x = Math.random() * screenWidth;
+      this.y = Math.random() * screenHeight;
+    }
     this.angle = Math.random() * 10;
     this.speed = Math.random() * 0.75;
   }
@@ -19,13 +27,25 @@ export default class Asteroid
     ctx.translate(this.x, this.y);
     ctx.rotate(this.angle);
     ctx.beginPath();
-    ctx.moveTo(0, -10);
-    ctx.lineTo(-20, 0);
-    ctx.lineTo(-15, 20);
-    ctx.lineTo(5, 25);
-    ctx.lineTo(15, 5);
-    ctx.lineTo(5, 5);
-    ctx.lineTo(8, -8);
+    if (this.size === 'small')
+    {
+      ctx.moveTo(0, -10);
+      ctx.lineTo(-10, 0);
+      ctx.lineTo(-10, 10);
+      ctx.lineTo(5, 20);
+      ctx.lineTo(10, 5);
+      ctx.lineTo(8, -8);
+    }
+    else
+    {
+      ctx.moveTo(0, -10);
+      ctx.lineTo(-20, 0);
+      ctx.lineTo(-15, 20);
+      ctx.lineTo(5, 25);
+      ctx.lineTo(15, 5);
+      ctx.lineTo(5, 5);
+      ctx.lineTo(8, -8);
+    }
     ctx.closePath();
     ctx.stroke();
     ctx.restore();

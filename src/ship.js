@@ -39,8 +39,6 @@ export default class Ship
     if (rotateRight) { this.angle += 0.05; }
     if (rotateLeft) { this.angle -= 0.05; }
 
-    console.log('Angle: ' + this.angle);
-
     // Screen wrapping.
     if(this.x < 0) { this.x = this.screenWidth; }
     if(this.y < 0) { this.y = this.screenHeight; }

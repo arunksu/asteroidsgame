@@ -101,9 +101,26 @@ export default class Game
     // Asteroids.
     var len = this.asteroids.length;
     var i = 0;
+    var ii = 0;
     for (i = 0; i < len; i++)
     {
-      this.asteroids[i].update();
+      var currentAsteroid = this.asteroids[i];
+      var collision = false;
+      for (ii = 0; ii < len; ii++)
+      {
+        if (i != ii)
+        {
+          var otherAsteroid = this.asteroids[ii];
+          if (currentAsteroid.x > otherAsteroid.x - 20 &&
+              currentAsteroid.x < otherAsteroid.x + 20 &&
+              currentAsteroid.y > otherAsteroid.y - 20 &&
+              currentAsteroid.y < otherAsteroid.y + 20)
+          {
+            collision = true;
+          }
+        }
+      }
+      this.asteroids[i].update(collision);
     }
 
     // Lasers.

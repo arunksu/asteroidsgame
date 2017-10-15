@@ -3,12 +3,13 @@ export default class Asteroid
   constructor(screenWidth, screenHeight, size)
   {
     this.size = size;
+    this.health = 10;
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
     this.x = Math.random() * screenWidth;
     this.y = Math.random() * screenHeight;
     this.angle = Math.random() * 10;
-    this.speed = Math.random() * 0.85;
+    this.speed = Math.random() * 0.75;
   }
 
   render(ctx)
@@ -30,8 +31,11 @@ export default class Asteroid
     ctx.restore();
   }
 
-  update()
+  update(collision, hit)
   {
+    if (collision) { this.angle *= -1; }
+    if (hit) { this.health -= 1; }
+
     this.x += this.speed * Math.cos(this.angle);
     this.y += this.speed * Math.sin(this.angle);
 

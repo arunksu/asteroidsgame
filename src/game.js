@@ -105,12 +105,15 @@ export default class Game
     for (i = 0; i < len; i++)
     {
       var currentAsteroid = this.asteroids[i];
+      if (currentAsteroid.health < 1) { continue; }
+
       var collision = false;
       for (ii = 0; ii < len; ii++)
       {
         if (i != ii)
         {
           var otherAsteroid = this.asteroids[ii];
+          if (otherAsteroid.health < 1) { continue; }
           if (currentAsteroid.x > otherAsteroid.x - 20 &&
               currentAsteroid.x < otherAsteroid.x + 20 &&
               currentAsteroid.y > otherAsteroid.y - 20 &&
@@ -120,7 +123,7 @@ export default class Game
           }
         }
       }
-      this.asteroids[i].update(collision);
+      this.asteroids[i].update(collision, false, false);
     }
 
     // Lasers.
@@ -134,7 +137,25 @@ export default class Game
     var j = 0;
     for (j = 0; j < lenLasers; j++)
     {
-      this.lasers[j].update(this.ship.x, this.ship.y, this.ship.angle);
+      var currentLaser = this.lasers[j];
+      var hitAsteroid = false
+      if (currentLaser.hitAsteroid) { continue; }
+
+      // Check if laser hit asteroid.
+      for (i = 0; i < len; i++)
+      {
+        var currentAsteroid = this.asteroids[i];
+        if (currentAsteroid.health < 1) { continue; }
+        if (currentAsteroid.x > currentLaser.x - 20 &&
+            currentAsteroid.x < currentLaser.x + 20 &&
+            currentAsteroid.y > currentLaser.y - 20 &&
+            currentAsteroid.y < currentLaser.y + 20)
+        {
+          hitAsteroid = true;
+          currentAsteroid.update(false, false, true);
+        }
+      }
+      this.lasers[j].update(this.ship.x, this.ship.y, this.ship.angle, hitAsteroid);
     }
 
     this.previousTime = currentTime;
@@ -154,6 +175,7 @@ export default class Game
     var i = 0;
     for (i = 0; i < len; i++)
     {
+      if (this.asteroids[i].health < 1) { continue; }
       this.asteroids[i].render(this.ctx);
     }
 
@@ -161,6 +183,7 @@ export default class Game
     var j = 0;
     for (j = 0; j < lenLasers; j++)
     {
+      if (this.lasers[j].hitAsteroid) { continue; }
       this.lasers[j].render(this.ctx);
     }
   }

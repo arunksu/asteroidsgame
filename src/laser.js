@@ -8,6 +8,7 @@ export default class Laser
     this.y = 0;
     this.angle = 0;
     this.initialized = false;
+    this.hitAsteroid = false;
   }
 
   render(ctx)
@@ -24,12 +25,13 @@ export default class Laser
     ctx.restore();
   }
 
-  update(shipX, shipY, shipAngle)
+  update(shipX, shipY, shipAngle, hitAsteroid)
   {
     if (this.initialized)
     {
       this.x += 2 * Math.cos(this.angle);
       this.y += 2 * Math.sin(this.angle);
+      this.hitAsteroid = hitAsteroid;
     }
     else
     {

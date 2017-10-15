@@ -31,10 +31,11 @@ export default class Asteroid
     ctx.restore();
   }
 
-  update(collision, hit)
+  update(collision, hitShip, hitLaser)
   {
     if (collision) { this.angle *= -1; }
-    if (hit) { this.health -= 1; }
+    if (hitShip) { this.health = 0; }
+    if (hitLaser) { this.health -= 1; }
 
     this.x += this.speed * Math.cos(this.angle);
     this.y += this.speed * Math.sin(this.angle);

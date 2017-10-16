@@ -13,6 +13,7 @@ export default class Game
     this.shoot = false;
     this.previousTime = Math.floor(Date.now() / 1000);
     this.lives = 3;
+    this.level = 1;
     this.numberOfAsteroids = 10;
     this.asteroids = [];
 
@@ -256,6 +257,7 @@ export default class Game
     if (this.lives < 1) { this.handleGameOver(); }
     else
     {
+      this.level += 1;
       this.numberOfAsteroids += 2;
       this.createAsteroids(this.numberOfAsteroids);
     }
@@ -281,6 +283,7 @@ export default class Game
     this.ctx.fillStyle = 'white';
     this.ctx.font = '18px Arial';
     this.ctx.fillText('Lives: ' + this.lives, 20, this.canvas.height - 20);
+    this.ctx.fillText('Level: ' + this.level, 100, this.canvas.height - 20);
   }
 
   // Game loop.

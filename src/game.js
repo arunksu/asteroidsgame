@@ -7,6 +7,7 @@ export default class Game
   constructor()
   {
     // Variables.
+    this.play = true;
     this.move = false;
     this.rotateRight = false;
     this.rotateLeft = false;
@@ -266,7 +267,7 @@ export default class Game
   // New wave with 2 more asteroids than before.
   newWave()
   {
-    if (this.lives < 1) { this.handleGameOver(); }
+    if (this.lives < 1) { this.play = false }
     else
     {
       this.level += 1;
@@ -278,31 +279,47 @@ export default class Game
   // Reset game if ship is hit.
   handleShipDestroyed()
   {
-    if (this.lives < 1) { this.handleGameOver(); }
+    if (this.lives < 1) { this.play = false; }
     else
     {
       this.createShip();
       this.lives -= 1
     }
+    if (this.lives < 1 ) { this.play = false; }
   }
 
   handleGameOver()
   {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = 'bold 18px Arial';
+    this.ctx.fillText('GAME OVER - REFRESH PAGE FOR NEW GAME', 90, 300);
+    this.ctx.fillText('YOU MADE IT TO LEVEL ' + this.level, 90, 350);
+    this.ctx.fillText('YOU SCORED ' + this.points + ' POINTS', 90, 400);
   }
 
   renderUI()
   {
     this.ctx.fillStyle = 'white';
-    this.ctx.font = '18px Arial';
-    this.ctx.fillText('Lives: ' + this.lives, 20, this.canvas.height - 20);
-    this.ctx.fillText('Level: ' + this.level, 100, this.canvas.height - 20);
-    this.ctx.fillText('Points: ' + this.points, 180, this.canvas.height - 20);
+    this.ctx.font = 'bold 12px Arial';
+    this.ctx.fillText('LIVES: ' + this.lives, 20, this.canvas.height - 20);
+    this.ctx.fillText('LEVEL: ' + this.level, 100, this.canvas.height - 20);
+    this.ctx.fillText('POINTS: ' + this.points, 180, this.canvas.height - 20);
+    this.ctx.fillText('UP ARROW: MOVE', 20, 30);
+    this.ctx.fillText('LEFT/RIGHT ARROWS: ROTATE', 20, 60);
   }
 
   // Game loop.
   loop()
   {
-    this.update();
-    this.render();
+    if (this.play)
+    {
+      this.update();
+      this.render();
+    }
+    else
+    {
+      this.handleGameOver();
+    }
   }
 }

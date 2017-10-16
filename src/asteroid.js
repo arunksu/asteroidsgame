@@ -1,6 +1,6 @@
 export default class Asteroid
 {
-  constructor(screenWidth, screenHeight, x, y, size)
+  constructor(screenWidth, screenHeight, x, y, angle, speed, size)
   {
     this.size = size;
     this.health = 10;
@@ -10,14 +10,16 @@ export default class Asteroid
     {
       this.x = x;
       this.y = y;
+      this.angle = angle;
+      this.speed = speed;
     }
     else
     {
       this.x = Math.random() * screenWidth;
       this.y = Math.random() * screenHeight;
+      this.angle = Math.random() * 10;
+      this.speed = Math.random() * 0.75;
     }
-    this.angle = Math.random() * 10;
-    this.speed = Math.random() * 0.75;
   }
 
   render(ctx)

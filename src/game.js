@@ -52,7 +52,7 @@ export default class Game
     var i = 0;
     for (i = 0; i < number; i++)
     {
-      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 0, 0, 'large');
+      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 0, 0, 0, 0, 'large');
       this.asteroids.push(asteroid);
     }
   }
@@ -186,8 +186,13 @@ export default class Game
           if (currentAsteroid.health < 1 && currentAsteroid.size === 'large')
           {
             asteroidDestroyed = true;
-            small1 = new Asteroid(this.canvas.width, this.canvas.height, currentAsteroid.x, currentAsteroid.y, 'small');
-            small2 = new Asteroid(this.canvas.width, this.canvas.height, currentAsteroid.x, currentAsteroid.y, 'small');
+            var newX = currentAsteroid.x;
+            var newY = currentAsteroid.y;
+            var newSpeed = currentAsteroid.speed / 2;
+            var small1Angle = Math.random() * 10;
+            var small2Angle = small1Angle * 0.25;
+            small1 = new Asteroid(this.canvas.width, this.canvas.height, newX, newY, small1Angle, newSpeed, 'small');
+            small2 = new Asteroid(this.canvas.width, this.canvas.height, newX, newY, small2Angle, newSpeed, 'small');
           }
         }
       }

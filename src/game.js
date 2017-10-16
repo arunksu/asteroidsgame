@@ -12,6 +12,7 @@ export default class Game
     this.rotateLeft = false;
     this.shoot = false;
     this.previousTime = Math.floor(Date.now() / 1000);
+    this.lives = 3;
 
     // Canvas and context.
     this.canvas = document.createElement('canvas');
@@ -20,19 +21,8 @@ export default class Game
     this.ctx = this.canvas.getContext('2d');
     document.body.appendChild(this.canvas);
 
-    // Create ship.
-    this.ship = new Ship(this.canvas.width, this.canvas.height);
-
-    // Create asteroids.
-    this.asteroids = [];
-    var i = 0;
-    for (i = 0; i < 10; i++)
-    {
-      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 0, 0, 'large');
-      this.asteroids.push(asteroid);
-    }
-
-    this.lasers = [];
+    this.createShip();
+    this.createAsteroids(10);
 
     // Movement key bindings.
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -45,6 +35,26 @@ export default class Game
     this.render = this.render.bind(this);
     this.loop = this.loop.bind(this);
     this.interval = setInterval(this.loop, 1);
+  }
+
+  createShip()
+  {
+    // Create ship.
+    this.ship = new Ship(this.canvas.width, this.canvas.height);
+
+    // Create lasers list.
+    this.lasers = [];
+  }
+
+  createAsteroids(number)
+  {
+    this.asteroids = [];
+    var i = 0;
+    for (i = 0; i < number; i++)
+    {
+      var asteroid = new Asteroid(this.canvas.width, this.canvas.height, 0, 0, 'large');
+      this.asteroids.push(asteroid);
+    }
   }
 
   // Key down events.
@@ -96,11 +106,28 @@ export default class Game
     var currentTime = Math.floor(Date.now() / 100);
 
     // Ship.
-    this.ship.update(this.move, this.rotateRight, this.rotateLeft);
-
-    // Asteroids.
     var len = this.asteroids.length;
     var i = 0;
+    var hitShip = false;
+    for (i = 0; i < len; i++)
+    {
+      var currentAsteroid = this.asteroids[i];
+      if (currentAsteroid.health < 1) { continue; }
+      if (currentAsteroid.x > this.ship.x - 20 &&
+          currentAsteroid.x < this.ship.x + 20 &&
+          currentAsteroid.y > this.ship.y - 20 &&
+          currentAsteroid.y < this.ship.y + 20)
+      {
+        hitShip = true;
+        break;
+      }
+    }
+
+    // Handle ship hit or continue game.
+    if (hitShip) { this.handleShipDestroyed(); }
+    else { this.ship.update(this.move, this.rotateRight, this.rotateLeft); }
+
+    // Asteroids.
     var ii = 0;
     for (i = 0; i < len; i++)
     {
@@ -200,6 +227,21 @@ export default class Game
       if (this.lasers[j].hitAsteroid) { continue; }
       this.lasers[j].render(this.ctx);
     }
+  }
+
+  // Reset game if ship is hit.
+  handleShipDestroyed()
+  {
+    if (this.lives < 1) { this.handleGameOver(); }
+    else
+    {
+      this.createShip();
+      this.lives -= 1
+    }
+  }
+
+  handleGameOver()
+  {
   }
 
   // Game loop.

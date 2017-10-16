@@ -4,6 +4,7 @@ export default class Ship
   {
     this.screenWidth = screenWidth;
     this.screenHeight = screenHeight;
+    this.health = 3;
     this.x = screenWidth / 2;
     this.y = screenHeight / 2;
     this.angle = 0;
@@ -31,6 +32,7 @@ export default class Ship
 
   update(move, rotateRight, rotateLeft)
   {
+    // Handle user input.
     if (move)
     {
       this.x += Math.cos(this.angle);

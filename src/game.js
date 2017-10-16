@@ -14,6 +14,7 @@ export default class Game
     this.previousTime = Math.floor(Date.now() / 1000);
     this.lives = 3;
     this.level = 1;
+    this.points = 0;
     this.numberOfAsteroids = 10;
     this.asteroids = [];
 
@@ -197,8 +198,19 @@ export default class Game
         {
           hitAsteroid = true;
           currentAsteroid.update(false, false, true);
+
+          // Add points.
+          if (currentAsteroid.size === 'small' && currentAsteroid.health < 1)
+          {
+            this.points += 5;
+          }
+
+          // If it was a large asteroid, spawn 2 new ones in the same
+          // spot, going opposite directions, with slightly less
+          // momentum than the large asteroid.
           if (currentAsteroid.health < 1 && currentAsteroid.size === 'large')
           {
+            this.points += 10;
             asteroidDestroyed = true;
             var newX = currentAsteroid.x;
             var newY = currentAsteroid.y;
@@ -284,6 +296,7 @@ export default class Game
     this.ctx.font = '18px Arial';
     this.ctx.fillText('Lives: ' + this.lives, 20, this.canvas.height - 20);
     this.ctx.fillText('Level: ' + this.level, 100, this.canvas.height - 20);
+    this.ctx.fillText('Points: ' + this.points, 180, this.canvas.height - 20);
   }
 
   // Game loop.

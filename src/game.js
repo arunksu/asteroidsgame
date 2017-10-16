@@ -13,6 +13,8 @@ export default class Game
     this.shoot = false;
     this.previousTime = Math.floor(Date.now() / 1000);
     this.lives = 3;
+    this.numberOfAsteroids = 10;
+    this.asteroids = [];
 
     // Canvas and context.
     this.canvas = document.createElement('canvas');
@@ -22,7 +24,7 @@ export default class Game
     document.body.appendChild(this.canvas);
 
     this.createShip();
-    this.createAsteroids(10);
+    this.createAsteroids(this.numberOfAsteroids);
 
     // Movement key bindings.
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -48,7 +50,6 @@ export default class Game
 
   createAsteroids(number)
   {
-    this.asteroids = [];
     var i = 0;
     for (i = 0; i < number; i++)
     {
@@ -105,9 +106,21 @@ export default class Game
     // Get Data.now(). Floor it by 100.
     var currentTime = Math.floor(Date.now() / 100);
 
-    // Ship.
+    // Check if all asteroids are destroyed.
     var len = this.asteroids.length;
     var i = 0;
+    var allAsteroidsDestroyed = true;
+    for (i = 0; i < len; i++)
+    {
+      if (this.asteroids[i].health > 0)
+      {
+        allAsteroidsDestroyed = false;
+        break;
+      }
+    }
+    if (allAsteroidsDestroyed) { this.newWave(); }
+
+    // Ship.
     var hitShip = false;
     for (i = 0; i < len; i++)
     {
@@ -235,6 +248,17 @@ export default class Game
     }
 
     this.renderUI();
+  }
+
+  // New wave with 2 more asteroids than before.
+  newWave()
+  {
+    if (this.lives < 1) { this.handleGameOver(); }
+    else
+    {
+      this.numberOfAsteroids += 2;
+      this.createAsteroids(this.numberOfAsteroids);
+    }
   }
 
   // Reset game if ship is hit.

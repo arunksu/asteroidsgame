@@ -204,6 +204,7 @@ export default class Game
       this.lasers[j].update(this.ship.x, this.ship.y, this.ship.angle, hitAsteroid);
     }
 
+    // Update time.
     this.previousTime = currentTime;
   }
 

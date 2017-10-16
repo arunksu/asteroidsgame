@@ -17,6 +17,18 @@ export default class Asteroid
     {
       this.x = Math.random() * screenWidth;
       this.y = Math.random() * screenHeight;
+
+      // If asteroid is about to spawn on top
+      // of the ship, move it.
+      if (this.x > (this.screenWidth / 2) - 50 &&
+          this.x < (this.screenWidth / 2) + 50 &&
+          this.y > (this.screenHeight / 2) - 50 &&
+          this.y < (this.screenHeight / 2) + 50)
+      {
+        this.x = this.screenWidth / 4;
+        this.y = this.screenHeight / 4;
+      }
+
       this.angle = Math.random() * 10;
       this.speed = Math.random() * 0.75;
     }

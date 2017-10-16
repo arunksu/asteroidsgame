@@ -188,7 +188,7 @@ export default class Game
             asteroidDestroyed = true;
             var newX = currentAsteroid.x;
             var newY = currentAsteroid.y;
-            var newSpeed = currentAsteroid.speed / 2;
+            var newSpeed = currentAsteroid.speed * 0.85;
             var small1Angle = Math.random() * 10;
             var small2Angle = small1Angle * 0.25;
             small1 = new Asteroid(this.canvas.width, this.canvas.height, newX, newY, small1Angle, newSpeed, 'small');
@@ -233,6 +233,8 @@ export default class Game
       if (this.lasers[j].hitAsteroid) { continue; }
       this.lasers[j].render(this.ctx);
     }
+
+    this.renderUI();
   }
 
   // Reset game if ship is hit.
@@ -248,6 +250,13 @@ export default class Game
 
   handleGameOver()
   {
+  }
+
+  renderUI()
+  {
+    this.ctx.fillStyle = 'white';
+    this.ctx.font = '18px Arial';
+    this.ctx.fillText('Lives: ' + this.lives, 20, this.canvas.height - 20);
   }
 
   // Game loop.

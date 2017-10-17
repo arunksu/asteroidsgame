@@ -306,7 +306,8 @@ export default class Game
     this.ctx.fillText('LEVEL: ' + this.level, 100, this.canvas.height - 20);
     this.ctx.fillText('POINTS: ' + this.points, 180, this.canvas.height - 20);
     this.ctx.fillText('UP ARROW: MOVE', 20, 30);
-    this.ctx.fillText('LEFT/RIGHT ARROWS: ROTATE', 20, 60);
+    this.ctx.fillText('LEFT/RIGHT ARROWS: ROTATE', 20, 50);
+    this.ctx.fillText('SPACEBAR: FIRE', 20, 70);
   }
 
   // Game loop.

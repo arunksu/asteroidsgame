@@ -19,6 +19,11 @@ export default class Game
     this.numberOfAsteroids = 10;
     this.asteroids = [];
 
+    // Sound.
+    this.fxLaser = new Audio('/laser.mp3');
+    this.fxCrash = new Audio('/crash.mp3');
+    this.fxShipDestroyed = new Audio('/shipdestroyed.mp3');
+
     // Canvas and context.
     this.canvas = document.createElement('canvas');
     this.canvas.width = 600;
@@ -163,6 +168,7 @@ export default class Game
               currentAsteroid.y < otherAsteroid.y + 20)
           {
             collision = true;
+            if (this.fxCrash) { this.fxCrash.play(); } 
           }
         }
       }
@@ -174,6 +180,7 @@ export default class Game
     {
       var laser = new Laser(this.canvas.width, this.canvas.height);
       this.lasers.push(laser);
+      if (this.fxLaser) { this.fxLaser.play(); }
     }
 
     var lenLasers = this.lasers.length;
@@ -284,6 +291,7 @@ export default class Game
     {
       this.createShip();
       this.lives -= 1
+      if (this.fxShipDestroyed) { this.fxShipDestroyed.play(); }
     }
     if (this.lives < 1 ) { this.play = false; }
   }

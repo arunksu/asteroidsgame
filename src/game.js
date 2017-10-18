@@ -39,7 +39,7 @@ export default class Game
     this.update = this.update.bind(this);
     this.render = this.render.bind(this);
     this.loop = this.loop.bind(this);
-    this.interval = setInterval(this.loop, 1);
+    this.interval = setInterval(this.loop, 10);
   }
 
   createShip()

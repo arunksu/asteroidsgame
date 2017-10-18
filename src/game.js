@@ -168,7 +168,7 @@ export default class Game
               currentAsteroid.y < otherAsteroid.y + 20)
           {
             collision = true;
-            if (this.fxCrash) { this.fxCrash.play(); } 
+            if (this.fxCrash) { this.fxCrash.play(); }
           }
         }
       }

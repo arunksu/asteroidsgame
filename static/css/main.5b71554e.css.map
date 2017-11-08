@@ -1,0 +1,1 @@
+{"version":3,"sources":["index.css"],"names":[],"mappings":"AAAA,KAEE,SACA,UACA,sBAAwB,CAG1B,OAEE,sBACA,qBAAwB","file":"static/css/main.5b71554e.css","sourcesContent":["body\n{\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif;\n}\n\ncanvas\n{\n  border: 1px solid black;\n  background-color: black;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./src/index.css"],"sourceRoot":""}
